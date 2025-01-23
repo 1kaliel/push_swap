@@ -31,8 +31,8 @@ char	*to_hex(void *data, int up)
 
 char	*print_x(void *data)
 {
-	char *hex_str;
-	char *result;
+	char	*hex_str;
+	char	*result;
 
 	hex_str = to_hex(data, 0);
 	if (hex_str)
@@ -46,8 +46,8 @@ char	*print_x(void *data)
 
 char	*print_upx(void *data)
 {
-	char *hex_str;
-	char *result;
+	char	*hex_str;
+	char	*result;
 
 	hex_str = to_hex(data, 1);
 	if (hex_str)

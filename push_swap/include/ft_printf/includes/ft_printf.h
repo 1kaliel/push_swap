@@ -15,24 +15,19 @@
 # include "libft.h"
 # include <stdarg.h>
 
-//main
-int		ft_printf(const char *bau, ...);
+int				ft_printf(const char *bau, ...);
 
-//types
-char	*print_c(void *data);
-char	*print_d(void *data);
-char	*print_s(void *data);
-char	*print_p(void *data);
-char	*print_u(void *data);
-char	*print_x(void *data);
-char	*print_upx(void *data);
-void 	write_char(char c, int *counter);
-void 	print_percent(int *counter);
+char			*print_c(void *data);
+char			*print_d(void *data);
+char			*print_s(void *data);
+char			*print_p(void *data);
+char			*print_u(void *data);
+char			*print_x(void *data);
+char			*print_upx(void *data);
+void			write_char(char c, int *counter);
+void			print_percent(int *counter);
 
-
-//utils
-char	*ft_itoa_hex(unsigned long num, int up, char *buffer);
-//typedef
-typedef char*	(*manipulate_ft)(void*);
+char			*ft_itoa_hex(unsigned long num, int up, char *buffer);
+typedef char	*(*t_manipulate_ft)(void *);
 
 #endif

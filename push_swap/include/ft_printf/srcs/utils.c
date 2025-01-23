@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void write_char(char c, int *counter)
+void	write_char(char c, int *counter)
 {
-    write(1, &c, 1);
-    (*counter)++;
+	write(1, &c, 1);
+	(*counter)++;
 }
 
-void print_percent(int *counter)
+void	print_percent(int *counter)
 {
-    write(1, "%", 1);
-    (*counter)++;
+	write(1, "%", 1);
+	(*counter)++;
 }

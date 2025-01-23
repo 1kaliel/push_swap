@@ -1,92 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucguima <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/23 18:06:37 by lucguima          #+#    #+#             */
+/*   Updated: 2025/01/23 18:06:38 by lucguima         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void init_stack(t_stack *stack)
+void	init_stack(t_stack *stack)
 {
-    stack->top = NULL;
-    stack->size = 0;
+	stack->top = NULL;
+	stack->size = 0;
 }
 
-// Push to the bottom of the stack
-void push_bottom(t_stack *stack, int value)
+int	validate_and_push(t_stack *stack, char *num)
 {
-    t_node *new_node;
-    t_node *current;
+	int	value;
 
-    new_node = (t_node *)ft_calloc(1, sizeof(t_node));
-    if (!new_node)
-        return;
-    new_node->value = value;
-
-    if (!stack->top)
-        stack->top = new_node;
-    else
-    {
-        current = stack->top;
-        while (current->next)
-            current = current->next;
-        current->next = new_node;
-    }
-    stack->size++;
+	if (!is_valid_number(num))
+		return (0);
+	value = ft_atoi(num);
+	if (contains_duplicate(stack, value))
+		return (0);
+	push_bottom(stack, value);
+	return (1);
 }
 
-// Parse and validate input arguments
-int parse_input(t_stack *stack, char **argv)
+int	parse_and_split(t_stack *stack, char *input)
 {
-    int i;
-    int value;
+	char	**numbers;
+	int		i;
 
-    init_stack(stack);
-    i = 1;
-    while (argv[i])
-    {
-        if (!is_valid_number(argv[i]))
-        {
-            free_stack(stack);
-            return (0); // Invalid input
-        }
-        value = ft_atoi(argv[i]);
-        if (contains_duplicate(stack, value))
-        {
-            free_stack(stack);
-            return (0); // Duplicate found
-        }
-        push_bottom(stack, value); // Push to the bottom to preserve input order
-        i++;
-    }
-    return (1); // Valid input
+	numbers = ft_split(input, ' ');
+	if (!numbers)
+		return (0);
+	i = 0;
+	while (numbers[i])
+	{
+		if (!validate_and_push(stack, numbers[i]))
+		{
+			free_split(numbers);
+			return (0);
+		}
+		i++;
+	}
+	free_split(numbers);
+	return (1);
 }
 
-// Check if the string is a valid integer
-int is_valid_number(char *str)
+int	parse_input(t_stack *stack, char **argv)
 {
-    int i;
+	char	*trimmed_input;
 
-    if (!str || !*str)
-        return (0); // Empty string is invalid
-
-    i = 0;
-    if (str[i] == '-' || str[i] == '+')
-        i++;
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i]))
-            return (0); // Not a digit
-        i++;
-    }
-    return (1); // Valid number
+	init_stack(stack);
+	if (!argv[1] || argv[1][0] == '\0')
+		return (0);
+	trimmed_input = ft_strtrim(argv[1], " ");
+	if (!trimmed_input || ft_strlen(trimmed_input) == 0)
+	{
+		free(trimmed_input);
+		return (0);
+	}
+	free(trimmed_input);
+	if (!parse_and_split(stack, argv[1]))
+		return (0);
+	return (1);
 }
 
-// Check for duplicates in the stack
-int contains_duplicate(t_stack *stack, int value)
+int	contains_duplicate(t_stack *stack, int value)
 {
-    t_node *current;
+	t_node	*current;
 
-    current = stack->top;
-    while (current)
-    {
-        if (current->value == value)
-            return (1); // Duplicate found
-        current = current->next;
-    }
-    return (0); // No duplicates
+	current = stack->top;
+	while (current)
+	{
+		if (current->value == value)
+			return (1);
+		current = current->next;
+	}
+	return (0);
 }

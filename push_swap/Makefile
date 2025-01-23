@@ -9,7 +9,7 @@ SRCDIR = src
 OBJDIR = obj
 INCDIR = include
 
-SRC = $(SRCDIR)/main.c $(SRCDIR)/parsing.c $(SRCDIR)/utils.c $(SRCDIR)/operations.c $(SRCDIR)/sorting.c $(SRCDIR)/radix.c 
+SRC = $(SRCDIR)/main.c $(SRCDIR)/parsing.c $(SRCDIR)/utils.c $(SRCDIR)/utils_2.c $(SRCDIR)/operations.c $(SRCDIR)/sorting.c $(SRCDIR)/radix.c
 OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRC:.c=.o)))
 
 LIBFT_DIR = $(INCDIR)/libft
